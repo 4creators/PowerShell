@@ -1029,8 +1029,11 @@ function New-PSOptions {
         elseif ($Runtime -like 'fxdependent*') {
             $Output = [IO.Path]::Combine($Top, "bin", $Configuration, $Framework, "publish", $Executable)
         }
-        else {
-            $Output = [IO.Path]::Combine($Top, "bin", $Configuration, $Framework, $Runtime, "publish", $Executable)
+        elseif ($Runtime.Contains("win7-")) {
+            $Output = [IO.Path]::Combine($Top, "bin", $Runtime.Replace("win7-", $null), $Configuration, $Framework, $Runtime, "publish", $Executable)
+        }
+        elseif ($Runtime.Contains("win-")) {
+            $Output = [IO.Path]::Combine($Top, "bin", $Runtime.Replace("win-", $null), $Configuration, $Framework, $Runtime, "publish", $Executable)
         }
     } else {
         $Output = [IO.Path]::Combine($Output, $Executable)
